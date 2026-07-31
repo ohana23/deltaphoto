@@ -11,8 +11,14 @@
   background: var(--deltaphoto-background);
   color: var(--deltaphoto-foreground);
   font-family: system-ui;
+}
+
+.deltaphoto,
+.deltaphoto * {
   user-select: none;
   -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .deltaphoto__image {
