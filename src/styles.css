@@ -1,0 +1,161 @@
+.deltaphoto {
+  --deltaphoto-position: 50%;
+  --deltaphoto-fit: cover;
+  --deltaphoto-foreground: #000;
+  --deltaphoto-background: #fff;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: inherit;
+  background: var(--deltaphoto-background);
+  color: var(--deltaphoto-foreground);
+  font-family: system-ui;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.deltaphoto__image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--deltaphoto-fit);
+  pointer-events: none;
+}
+
+.deltaphoto__image--before {
+  z-index: 1;
+  clip-path: inset(0 calc(100% - var(--deltaphoto-position)) 0 0);
+}
+
+.deltaphoto__labels {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.deltaphoto__label {
+  position: absolute;
+  top: 16px;
+  padding: 7px 11px;
+  border: 1px solid color-mix(in srgb, var(--deltaphoto-foreground) 18%, transparent);
+  border-radius: 999px;
+  background: var(--deltaphoto-background);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.deltaphoto__label--before {
+  left: 16px;
+}
+
+.deltaphoto__label--after {
+  right: 16px;
+}
+
+.deltaphoto__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--deltaphoto-position);
+  z-index: 3;
+  width: 0;
+  pointer-events: none;
+}
+
+.deltaphoto__line {
+  position: absolute;
+  inset-block: 0;
+  left: -1px;
+  width: 2px;
+  background: var(--deltaphoto-background);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--deltaphoto-background) 55%, transparent), 0 0 18px rgb(0 0 0 / 18%);
+}
+
+.deltaphoto__thumb {
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: grid;
+  place-items: center;
+  align-items: center;
+  width: 38.4px;
+  height: 38.4px;
+  padding: 0 7.2px;
+  border: 1px solid color-mix(in srgb, var(--deltaphoto-foreground) 22%, transparent);
+  border-radius: 50%;
+  background: var(--deltaphoto-background);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 20%), inset 0 1px 0 rgb(255 255 255 / 90%);
+  transform: translate(-50%, -50%);
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.deltaphoto__grip {
+  display: block;
+  width: 10px;
+  height: 16px;
+  color: var(--deltaphoto-foreground);
+}
+
+.deltaphoto__range {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: col-resize;
+  touch-action: pan-y;
+}
+
+.deltaphoto:hover .deltaphoto__thumb,
+.deltaphoto:has(.deltaphoto__range:focus-visible) .deltaphoto__thumb {
+  background: var(--deltaphoto-background);
+  box-shadow: 0 10px 34px rgb(0 0 0 / 26%), inset 0 1px 0 rgb(255 255 255 / 90%);
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.deltaphoto:has(.deltaphoto__range:active) .deltaphoto__thumb {
+  transform: translate(-50%, -50%) scale(0.96);
+}
+
+.deltaphoto:has(.deltaphoto__range:focus-visible) {
+  outline: 3px solid #4c77ff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .deltaphoto__label {
+    top: 10px;
+    padding: 6px 9px;
+    font-size: 10px;
+  }
+
+  .deltaphoto__label--before {
+    left: 10px;
+  }
+
+  .deltaphoto__label--after {
+    right: 10px;
+  }
+
+  .deltaphoto__thumb {
+    width: 33.6px;
+    height: 33.6px;
+    padding-inline: 5.6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deltaphoto__thumb {
+    transition: none;
+  }
+}

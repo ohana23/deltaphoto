@@ -1,0 +1,23 @@
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: #111;
+}
+
+.preview {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+}
+
+.preview .deltaphoto {
+  width: min(100%, 980px);
+  border-radius: 18px;
+}
