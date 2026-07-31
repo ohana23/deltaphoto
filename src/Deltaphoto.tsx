@@ -46,8 +46,8 @@ export function Deltaphoto({
   onPositionChange,
   aspectRatio = "3 / 2",
   objectFit = "cover",
-  foregroundColor = "#000",
-  backgroundColor = "#fff",
+  foregroundColor = "rgb(55, 55, 55)",
+  backgroundColor = "rgb(230, 230, 230)",
   ariaLabel = "Compare before and after images",
   className = "",
   style,
@@ -58,6 +58,7 @@ export function Deltaphoto({
   );
   const currentPosition = clamp(position ?? internalPosition);
   const [displayPosition, setDisplayPosition] = useState(currentPosition);
+  const [hasToggled, setHasToggled] = useState(false);
   const displayPositionRef = useRef(currentPosition);
   const targetPositionRef = useRef(currentPosition);
   const pointerIsDownRef = useRef(false);
@@ -130,6 +131,7 @@ export function Deltaphoto({
   const handlePointerDown = useCallback(() => {
     pointerIsDownRef.current = true;
     targetPositionRef.current = currentPosition;
+    setHasToggled(false);
   }, [currentPosition]);
 
   const handlePointerEnd = useCallback(() => {
@@ -150,6 +152,16 @@ export function Deltaphoto({
     },
     [setDisplayedPosition, startSmoothing, updatePosition],
   );
+
+  const handleToggle = useCallback(() => {
+    stopSmoothing();
+
+    const nextPosition = targetPositionRef.current >= 50 ? 0 : 100;
+    targetPositionRef.current = nextPosition;
+    setHasToggled(true);
+    updatePosition(nextPosition);
+    setDisplayedPosition(nextPosition);
+  }, [setDisplayedPosition, stopSmoothing, updatePosition]);
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
@@ -182,6 +194,8 @@ export function Deltaphoto({
     "--deltaphoto-foreground": foregroundColor,
     "--deltaphoto-background": backgroundColor,
   } as CSSProperties;
+  const nextPhotoLabel = displayPosition < 50 ? beforeLabel : afterLabel;
+  const toggleText = hasToggled ? `Show ${nextPhotoLabel}` : "Toggle";
 
   return (
     <div className={`deltaphoto ${className}`.trim()} style={rootStyle} {...rest}>
@@ -197,17 +211,28 @@ export function Deltaphoto({
         alt={beforeAlt}
         draggable={false}
       />
-      {showLabels && (
+      {showLabels && !hasToggled && (
         <div className="deltaphoto__labels" aria-hidden="true">
-          <span className="deltaphoto__label deltaphoto__label--before">
-            {beforeLabel}
-          </span>
-          <span className="deltaphoto__label deltaphoto__label--after">
-            {afterLabel}
-          </span>
+          <div className="deltaphoto__label-clip deltaphoto__label-clip--before">
+            <span className="deltaphoto__label deltaphoto__label--before">
+              {beforeLabel}
+            </span>
+          </div>
+          <div className="deltaphoto__label-clip deltaphoto__label-clip--after">
+            <span className="deltaphoto__label deltaphoto__label--after">
+              {afterLabel}
+            </span>
+          </div>
         </div>
       )}
-      <div className="deltaphoto__handle" aria-hidden="true">
+      <div
+        className={`deltaphoto__handle${
+          displayPosition === 0 || displayPosition === 100
+            ? " deltaphoto__handle--hidden"
+            : ""
+        }`}
+        aria-hidden="true"
+      >
         <span className="deltaphoto__line" />
         <span className="deltaphoto__thumb">
           <svg
@@ -225,6 +250,14 @@ export function Deltaphoto({
           </svg>
         </span>
       </div>
+      <button
+        className="deltaphoto__toggle"
+        type="button"
+        onClick={handleToggle}
+        aria-label={toggleText}
+      >
+        {toggleText}
+      </button>
       <input
         className="deltaphoto__range"
         type="range"

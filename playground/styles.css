@@ -13,11 +13,119 @@ body {
 .preview {
   display: grid;
   min-height: 100vh;
-  place-items: center;
-  padding: 24px;
+  place-items: center start;
+  padding: 24px 300px 24px 24px;
 }
 
 .preview .deltaphoto {
   width: min(100%, 980px);
   border-radius: 18px;
+}
+
+.preview-controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  width: 220px;
+  padding: 14px 16px 16px;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 14px;
+  background: rgb(22 22 22 / 88%);
+  box-shadow: 0 12px 36px rgb(0 0 0 / 28%);
+  color: #f7f7f7;
+  font-family: system-ui, sans-serif;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.preview-controls__group {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  margin: 16px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.preview-controls__group:first-child {
+  margin-top: 0;
+}
+
+.preview-controls__group legend {
+  margin-bottom: 8px;
+  color: #c6c6c6;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.preview-controls__radio,
+.preview-controls__color,
+.preview-controls__text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #e2e2e2;
+  font-size: 13px;
+}
+
+.preview-controls__radio {
+  justify-content: flex-start;
+}
+
+.preview-controls__radio input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: #fff;
+}
+
+.preview-controls__color {
+  padding-block: 3px;
+}
+
+.preview-controls__text input {
+  box-sizing: border-box;
+  width: 112px;
+  min-width: 0;
+  padding: 5px 7px;
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 6px;
+  outline: none;
+  background: rgb(255 255 255 / 9%);
+  color: inherit;
+  font: inherit;
+}
+
+.preview-controls__text input:focus {
+  border-color: #fff;
+}
+
+.preview-controls__color input {
+  width: 32px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .preview {
+    align-content: start;
+    padding: 300px 16px 16px;
+  }
+
+  .preview-controls {
+    top: 12px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+  }
+
+  .preview-controls__group:last-child {
+    grid-template-columns: 1fr 1fr;
+  }
 }
