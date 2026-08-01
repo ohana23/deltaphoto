@@ -1,6 +1,6 @@
 {
   "name": "deltaphoto",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "An accessible before-and-after image comparison component for React.",
   "type": "module",
   "main": "./dist/index.js",
