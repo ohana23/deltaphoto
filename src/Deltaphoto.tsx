@@ -99,7 +99,7 @@ export function Deltaphoto({
         return;
       }
 
-      const catchUp = 1 - Math.exp(-elapsed / 85);
+      const catchUp = 1 - Math.exp(-elapsed / 70);
       setDisplayedPosition(current + difference * catchUp);
       animationFrameRef.current = requestAnimationFrame(step);
     };
@@ -230,7 +230,7 @@ export function Deltaphoto({
           displayPosition === 0 || displayPosition === 100
             ? " deltaphoto__handle--hidden"
             : ""
-        }`}
+        }${hasToggled ? " deltaphoto__handle--toggle" : ""}`}
         aria-hidden="true"
       >
         <span className="deltaphoto__line" />
