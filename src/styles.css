@@ -7,7 +7,7 @@
   width: 100%;
   overflow: hidden;
   isolation: isolate;
-  border-radius: inherit;
+  border-radius: 18px;
   corner-shape: superellipse(1.5);
   background: var(--deltaphoto-background);
   box-shadow: 0 4px 14px rgb(0 0 0 / 8%);

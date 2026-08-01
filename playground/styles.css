@@ -19,7 +19,6 @@ body {
 
 .preview .deltaphoto {
   width: min(100%, 980px);
-  border-radius: 18px;
 }
 
 .preview-controls {
