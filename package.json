@@ -3,6 +3,22 @@
   "version": "0.1.5",
   "description": "An accessible before-and-after image comparison component for React.",
   "type": "module",
+  "packageManager": "npm@11.9.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=20.19",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": ">=10.8",
+      "onFail": "error"
+    }
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,7 +36,11 @@
     "build": "tsc -p tsconfig.build.json && node scripts/copy-styles.mjs",
     "typecheck": "tsc -p tsconfig.build.json --noEmit",
     "dev": "asdf exec node ./node_modules/vite/bin/vite.js --config vite.config.mjs",
-    "prepack": "npm run build"
+    "test": "npm run build && node --test test/*.test.mjs",
+    "check:package": "node scripts/verify-package.mjs",
+    "check": "npm run typecheck && npm test && npm run check:package",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run check"
   },
   "repository": {
     "type": "git",
@@ -28,6 +48,10 @@
   },
   "bugs": {"url": "https://github.com/ohana23/deltaphoto/issues"},
   "homepage": "https://dannyohana.com/deltaphoto",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "peerDependencies": {"react": ">=18"},
   "devDependencies": {
     "@types/react": "^19.0.0",
